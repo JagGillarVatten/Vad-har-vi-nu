@@ -1,0 +1,38 @@
+body {
+  font-family: Arial, sans-serif;
+  background-color: #ffdedb;
+}
+
+h1 {
+  text-align: center;
+  margin-top: 50px;
+  margin-bottom: 0px;
+  font-size: 36px;
+}
+
+#countdown-timer {
+  text-align: center;
+  font-size: 28px;
+  margin-top: 20px;
+  margin-bottom: 20px;
+}
+
+.progressbar-container {
+  width: 80%;
+  height: 20px;
+  margin: 0 auto;
+  background-color: #eee;
+}
+
+.progressbar {
+  height: 100%;
+  background-color: #f44336;
+}
+
+.select {
+  margin: 20px;
+}
+
+option {
+  font-size: 24px;
+}

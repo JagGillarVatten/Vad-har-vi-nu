@@ -1,0 +1,386 @@
+<!DOCTYPE html>
+<html lang="sv">
+
+  <head>
+    <meta charset="UTF-8" />
+    <title>Vad har vi nu?</title>
+    <style>
+    /* CSS for a cute and soft UI */
+    @import url('https://fonts.googleapis.com/css2?family=DynaPuff&display=swap');
+    @import url('https://fonts.googleapis.com/css2?family=VT323&display=swap');
+    body {
+      background-color: #68384c;
+      margin: 0;
+      padding: 0;
+      font-family: 'DynaPuff', cursive;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      overflow: hidden;
+    }
+
+    h1 {
+      font-size: 4em;
+      font-weight: bold;
+      margin-top: 5%;
+      color: #f0dcdc;
+      text-align: center;
+      letter-spacing: 2px;
+    }
+
+    p {
+      margin: 5%;
+      padding: 1%;
+      font-size: 4em;
+      color: #fdd5d5;
+      text-align: center;
+      font-weight: ;
+    }
+
+    .progress-bar {
+      margin: 20px;
+      width: 80%;
+      height: 40px;
+      border-radius: 20px;
+      background-color: #754747;
+      position: relative;
+      overflow: hidden;
+      /* hide the overflow of the progress bar */
+    }
+
+    .progress-bar span {
+      display: block;
+      height: 100%;
+      border-radius: 20px;
+      background-color: #a3d47a;
+      position: absolute;
+      transition: width 0.5s ease;
+      /* add a transition to the width property */
+    }
+
+    /* Button styles */
+    .button {
+      display: inline-block;
+      padding: 10px 10px;
+      background-color: #815a5a;
+      color: #fff;
+      font-size: 1.2em;
+      font-weight: bold;
+      text-decoration: solid;
+      border-radius: 15px;
+      text-align: center;
+      margin: 20px;
+      font-family: 'dynapuff', cursive;
+      transition: background-color 0.8s ease;
+    }
+
+    .button:hover {
+      background-color: #a89494;
+    }
+
+    /* Dropdown styles */
+    .dropdown {
+      position: relative;
+      display: inline-block;
+    }
+
+    .dropdown-content {
+      display: none;
+      position: center;
+      z-index: 1;
+      background-color: #f5d0d0;
+      min-width: 170px;
+      box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.2);
+      border-radius: 5px;
+      font-size: 1.3em;
+    }
+
+    .dropdown-content a {
+      color: #815a5a;
+      font-family: 'dynapuff', cursive padding: 2px 16px;
+      text-decoration: none;
+      display: block;
+    }
+
+    .dropdown-content a:hover {
+      background-color: #dfc4c4;
+    }
+
+    .dropdown:hover .dropdown-content {
+      display: block;
+    }
+
+    /* Media queries */
+    @media screen and (max-width: 768px) {
+      h1 {
+        font-size: 3.5em;
+      }
+
+      p {
+        font-size: 2.1em;
+      }
+
+      .progress-bar {
+        width: 80%;
+      }
+    }
+
+    </style>
+    <script>
+    // JavaScript code
+    let events = [];
+    let eventDuration = 0;
+    const eventFiles = [
+
+    {
+      name: "9B",
+      url: "9B.json"
+    },
+    {
+      name: "9A",
+      url: "9A.json"
+    },
+    {
+      name: "9C",
+      url: "9C.json"
+    }
+    ];
+
+    function loadJSON(callback, url) {
+        const xhr = new XMLHttpRequest();
+        xhr.overrideMimeType("application/json");
+        xhr.open("GET", url, true);
+        xhr.onreadystatechange = function () {
+          if (xhr.readyState == 4 && xhr.status == "200") {
+            callback(xhr.responseText);
+          }
+        };
+        xhr.send(null);
+      }
+    
+      function getTodaysEvents() {
+        const today = new Date();
+        const dayOfWeek = today.getDay();
+        return events.filter((event) => event.startDay === dayOfWeek);
+      }
+    
+      function getNextEvent() {
+        const now = new Date();
+        const today = new Date(
+          now.getFullYear(),
+          now.getMonth(),
+          now.getDate()
+        );
+        const todaysEvents = getTodaysEvents();
+        for (let i = 0; i < todaysEvents.length; i++) {
+          const start = new Date(
+            `${today.toDateString()} ${todaysEvents[i].startTime}`
+          );
+          const end = new Date(
+            `${today.toDateString()} ${todaysEvents[i].endTime}`
+          );
+          if (now >= start && now < end) {
+            // We're currently in this event
+            return { name: todaysEvents[i].name, start: start, end: end };
+          } else if (now < start) {
+            // This event hasn't started yet
+            return { name: todaysEvents[i].name, start: start, end: end };
+          }
+        }
+        // There are no events left today
+        return null;
+      }
+    
+      function updateCountdown() {
+        if (events.length === 0) {
+          // JSON hasn't loaded yet, try again later
+          setTimeout(updateCountdown, 1000);
+          return;
+        }
+    
+        const now = new Date();
+        const nextEvent = getNextEvent();
+    
+        if (nextEvent === null) {
+          // No events left today
+          document.getElementById("countdown").innerHTML =
+            "Inga fler lektioner idag.";
+          document.getElementById("progress-bar").style.display = "none";
+          return;
+        }
+    
+        const eventName = nextEvent.name;
+        const start = nextEvent.start;
+        const end = nextEvent.end;
+    
+        if (now < start) {
+          // Event hasn't started yet
+          const timeUntilStart = (start - now) / 1000; // Convert to seconds
+          const countdown = ` ${eventName} börjar om: ${formatSeconds(
+            timeUntilStart
+          )} `;
+          document.getElementById("countdown").innerHTML = countdown;
+          document.getElementById("countdown").style.color = "#fdd5d5";
+          document.getElementById("progress").style.width = "0";
+          document.getElementById("progress").style.backgroundColor = "#a3d47a";
+          document.getElementById("progress-bar").style.display = "block";
+          return;
+        }
+    
+        // Event is ongoing or already finished
+        const totalDuration = (end - start) / 1000; // Convert to seconds
+        const timeElapsed = (now - start) / 1000; // Convert to seconds
+        const timeRemaining = (end - now) / 1000; // Convert to seconds
+        const eventDuration = (end - start) / 1000; // convert to seconds
+    
+        if (timeRemaining < 300 && timeRemaining >= 60) {
+          // Change color to yellow when there's less than 5 minutes left
+          document.getElementById("countdown").style.color = "#f7d26f";
+          document.getElementById("progress").style.backgroundColor = "#f7d26f";
+        } else if (timeRemaining < 60) {
+          // Change color to red when there's less than 1 minute left
+          document.getElementById("countdown").style.color = "#f36868";
+          document.getElementById("progress").style.backgroundColor = "#f26868";
+        }
+    
+        const countdown = `Tid kvar för ${eventName}: ${formatSeconds(
+          timeRemaining
+        )}`;
+        document.getElementById("countdown").innerHTML = countdown;
+    
+        const percentElapsed = (timeElapsed / eventDuration) * 100;
+        const width =
+          (percentElapsed / 100) *
+          document.getElementById("progress-bar").offsetWidth;
+        document.getElementById("progress").style.width = `${width}px`;
+    
+        document.getElementById("progress-bar").style.display = "block";
+      }
+      
+    
+      function formatSeconds(seconds) {
+        const minutes = Math.floor(seconds / 60);
+        const hours = Math.floor(minutes / 60);
+        const paddedSeconds = pad(Math.floor(seconds) % 60, 2);
+        if (hours > 0) {
+          return `${hours}:${pad(minutes % 60, 2)}:${paddedSeconds}`;
+        }
+        return `${pad(minutes, 2)}:${paddedSeconds}`;
+      }
+    
+      function pad(num, size) {
+        return ("000000000" + num).substr(-size);
+      }
+    
+      function loadEventFile(url) {
+        loadJSON(function (response) {
+          events = JSON.parse(response);
+          updateCountdown();
+        }, url);
+      }
+    
+      function init() {
+        const dropdownContent = document.querySelector(".dropdown-content");
+        const dropdownButton = document.querySelector(".dropdown-button");
+        eventFiles.forEach((eventFile) => {
+          const eventButton = document.createElement("a");
+          eventButton.innerText = eventFile.name;
+          eventButton.onclick = () => {
+            loadEventFile(eventFile.url);
+          };
+          dropdownContent.appendChild(eventButton);
+        });
+        loadEventFile(eventFiles[0].url);
+      }
+    
+      setInterval(updateCountdown, 100);
+    </script>
+  </head>
+  <body onload="init()">
+    <h1>Vad har vi nu?</h1>
+    <p id="countdown"></p>
+    <div class="progress-bar" id="progress-bar">
+      <span id="progress"></span>
+    </div>
+    <div class="dropdown">
+      <button class="dropdown-button button">Byt schema</button>
+      <div class="dropdown-content"></div>
+    </div>
+    
+
+  </body>
+</html>
+<div
+  id="page-visit-count"
+  style="
+    position: relative;
+    bottom: -20px;
+    right: 10px;
+    background-color: rgba(31, 21, 21, 0.5);
+    padding: 5px;
+    color: #fff;
+    font-size: 16px;
+  "
+>
+  Du är den <span id="visit-count"></span>e besökaren!
+</div>
+
+<script>
+  // Check if the page was loaded for the first time in this session
+  let isNewSession = sessionStorage.getItem("isNewSession") === null;
+
+  if (isNewSession) {
+    // Get the visit count from local storage, or set it to 0 if it doesn't exist
+    let visitCount = localStorage.getItem("visitCount");
+    if (!visitCount) {
+      visitCount = 0;
+    }
+
+    // Increment the visit count and save it to local storage
+    visitCount++;
+    localStorage.setItem("visitCount", visitCount);
+
+    // Display the visit count on the page
+    document.getElementById("visit-count").textContent = visitCount;
+
+    // Log the current visit count to the console
+    console.log(`Current visit count: ${visitCount}`);
+
+    // Set the session flag to prevent incrementing the count on page refresh
+    sessionStorage.setItem("isNewSession", false);
+  } else {
+    // Get the visit count from local storage and display it on the page
+    let visitCount = localStorage.getItem("visitCount");
+    document.getElementById("visit-count").textContent = visitCount;
+
+    // Log the current visit count to the console
+    console.log(`Current visit count: ${visitCount}`);
+  }
+
+  // Get the client IP address and log it to the console
+  const ipRequest = new XMLHttpRequest();
+
+  ipRequest.addEventListener("load", function () {
+    console.log(`Client IP address: ${this.responseText}`);
+  });
+
+  ipRequest.open("GET", "https://api.ipify.org", true);
+
+  ipRequest.send();
+
+  // Fade out the visit count after 5 seconds
+  setTimeout(function () {
+    let fadeEffect = setInterval(function () {
+      if (!document.getElementById("page-visit-count").style.opacity) {
+        document.getElementById("page-visit-count").style.opacity = 1;
+      }
+      if (document.getElementById("page-visit-count").style.opacity > 0) {
+        document.getElementById("page-visit-count").style.opacity -= 0.1;
+      } else {
+        clearInterval(fadeEffect);
+        document.getElementById("page-visit-count").style.display = "none";
+      }
+    }, 50);
+  }, 5000);
+</script>
+</body> </html>

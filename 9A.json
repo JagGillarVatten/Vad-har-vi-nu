@@ -1,0 +1,188 @@
+[
+  {
+    "name": "NO",
+    "startDay": 1,
+    "startTime": "09:20",
+    "endTime": "10:10"
+  },
+  {
+    "name": "SO",
+    "startDay": 1,
+    "startTime": "10:20",
+    "endTime": "11:05"
+  },
+  {
+    "name": "Moderna Språk",
+    "startDay": 1,
+    "startTime": "11:15",
+    "endTime": "12:10"
+  },
+  {
+    "name": "Lunch eller Språk",
+    "startDay": 1,
+    "startTime": "12:10",
+    "endTime": "13:10"
+  },
+  {
+    "name": "Matte",
+    "startDay": 1,
+    "startTime": "13:15",
+    "endTime": "14:00"
+  },
+  {
+    "name": "Idrott",
+    "startDay": 1,
+    "startTime": "14:10",
+    "endTime": "15:25"
+  },
+  {
+    "name": "Musik",
+    "startDay": 2,
+    "startTime": "08:20",
+    "endTime": "09:05"
+  },
+  {
+    "name": "Moderna Språk",
+    "startDay": 2,
+    "startTime": "09:30",
+    "endTime": "10:20"
+  },
+  {
+    "name": "Engelska",
+    "startDay": 2,
+    "startTime": "10:30",
+    "endTime": "11:35"
+  },
+  {
+    "name": "Klasstid",
+    "startDay": 2,
+    "startTime": "11:40",
+    "endTime": "12:10"
+  },
+  {
+    "name": "Lunch",
+    "startDay": 2,
+    "startTime": "12:10",
+    "endTime": "12:40"
+  },
+  {
+    "name": "NO eller Matte",
+    "startDay": 2,
+    "startTime": "13:10",
+    "endTime": "14:10"
+  },
+  {
+    "name": "NO eller Matte",
+    "startDay": 2,
+    "startTime": "14:15",
+    "endTime": "15:05"
+  },
+  {
+    "name": "Svenska",
+    "startDay": 3,
+    "startTime": "08:00",
+    "endTime": "08:55"
+  },
+  {
+    "name": "SO",
+    "startDay": 3,
+    "startTime": "09:05",
+    "endTime": "09:40"
+  },
+  {
+    "name": "HKK eller Bild",
+    "startDay": 3,
+    "startTime": "09:50",
+    "endTime": "12:10"
+  },
+  {
+    "name": "Lunch",
+    "startDay": 3,
+    "startTime": "12:10",
+    "endTime": "12:40"
+  },
+  {
+    "name": "Idrott",
+    "startDay": 3,
+    "startTime": "12:50",
+    "endTime": "14:10"
+  },
+  {
+    "name": "Svenska",
+    "startDay": 4,
+    "startTime": "08:20",
+    "endTime": "09:10"
+  },
+  {
+    "name": "Engelska",
+    "startDay": 4,
+    "startTime": "09:10",
+    "endTime": "10:10"
+  },
+  {
+    "name": "Moderna Språk",
+    "startDay": 4,
+    "startTime": "10:15",
+    "endTime": "11:05"
+  },
+  {
+    "name": "SO",
+    "startDay": 4,
+    "startTime": "11:20",
+    "endTime": "12:10"
+  },
+  {
+    "name": "Lunch",
+    "startDay": 4,
+    "startTime": "12:10",
+    "endTime": "12:40"
+  },
+  {
+    "name": "Matte",
+    "startDay": 4,
+    "startTime": "13:00",
+    "endTime": "14:05"
+  },
+  {
+    "name": "NO",
+    "startDay": 4,
+    "startTime": "14:10",
+    "endTime": "14:50"
+  },
+  {
+    "name": "Slöjd",
+    "startDay": 5,
+    "startTime": "08:00",
+    "endTime": "09:20"
+  },
+  {
+    "name": "Matte",
+    "startDay": 5,
+    "startTime": "09:35",
+    "endTime": "10:35"
+  },
+  {
+    "name": "SO",
+    "startDay": 5,
+    "startTime": "11:00",
+    "endTime": "12:10"
+  },
+  {
+    "name": "Lunch",
+    "startDay": 5,
+    "startTime": "12:10",
+    "endTime": "12:40"
+  },
+  {
+    "name": "NO",
+    "startDay": 5,
+    "startTime": "13:10",
+    "endTime": "14:00"
+  },
+  {
+    "name": "Svenska",
+    "startDay": 5,
+    "startTime": "14:05",
+    "endTime": "15:15"
+  }
+]

@@ -1,0 +1,21 @@
+{
+  "name": "Vad-har-vi-nu",
+  "version": "1.22.19",
+  "description": "Håller koll på vad för lektion vi har",
+  "main": "index.html",
+  "scripts": {
+    "start": "serve"
+  },
+  "repository": "https://github.com/JagGillarVatten/Vad-har-vi-nu.git",
+  "keywords": [],
+  "author": "Jeppe",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/codesandbox-app/static-template/issues"
+  },
+  "homepage": "https://github.com/codesandbox-app/static-template#readme",
+  "devDependencies": {
+    "serve": "^11.2.0"
+  },
+  "private": false
+}
