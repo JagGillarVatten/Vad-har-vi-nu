@@ -1,145 +1,154 @@
 /* CSS for a cute and soft UI */
-    @import url('https://fonts.googleapis.com/css2?family=DynaPuff&display=swap');
-    @import url('https://fonts.googleapis.com/css2?family=VT323&display=swap');
-    body {
-      background-color: #68384c;
-      margin: 0;
-      padding: 0;
-      font-family: 'DynaPuff', cursive;
-      display: flex;
-      flex-direction: column;
-      transition: 0.4s;
-      align-items: center;
-      overflow: hidden;
-    }
-    
+@import url("https://fonts.googleapis.com/css2?family=DynaPuff&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=VT323&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Short+Stack&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Bungee&display=swap");
+body {
+  background-color: #68384c;
+  margin: 0;
+  padding: 0;
+  font-family: "Bungee", cursive;
+  display: flex;
+  flex-direction: column;
+  transition: 0.4s;
+  align-items: center;
+  overflow: hidden;
+}
 
-    h1 {
-      font-size: 4em;
-      font-weight: bold;
-      margin-top: 5%;
-      color: #f0dcdc;
-      text-align: center;
-      letter-spacing: 3px;
-    }
+h1 {
+  font-size: 2.5em;
+  font-weight: bold;
+  margin-top: 5%;
+  color: #ffe4e4;
+  font-family: "Bungee", cursive;
+  text-align: center;
+  letter-spacing: 3px;
+}
 
-    p {
-      margin: 5%;
-      padding: 0%;
-      font-size: 4em;
-      color: #fdd5d5;
-      text-align: center;
-      font-weight: ;
-    }
+p {
+  margin: 5%;
+  font-family: "Bungee", cursive;
+  padding: 0%;
+  font-size: 3em;
+  color: #fdd5d5;
+  text-align: center;
+  font-weight: ;
+}
 
-    .progress-bar {
-      margin: 10px;
-      width: 80%;
-      animation:none ;
-      border-style: none;
-      height: 40px;
-      border-radius: 60px;
-      background-color: #754747;
-      position: relative;
-      overflow: hidden;
-      /* hide the overflow of the progress bar */
-    }
+.progress-bar {
+  margin: 10px;
+  width: 80%;
+  animation: none;
+  border-style: none;
+  height: 32px;
+  border-radius: 10px;
+  background-color: #754747;
+  position: relative;
+  overflow: hidden;
+  /* hide the overflow of the progress bar */
+}
 
-    .progress-bar span {
-      display: block;
-      height: 100%;
-      animation: shake infinite;
-      border-radius: 60px;
-      background-color: #a3d47a;
-      position: absolute;
-      transition: width 0.5s, background-color 2s ease;
-      /* add a transition to the width property */
-    }
+.progress-bar span {
+  display: block;
+  height: 100%;
+  animation: shake infinite;
+  border-radius: 10px;
+  background-color: #a3d47a;
+  position: absolute;
+  transition: width 0.5s, background-color 2s ease;
+  /* add a transition to the width property */
+}
 
-    /* Button styles */
-    .button {
-      display: inline-block;
-      padding: 10px 10px;
-      background-color: #815a5a;
-      color: #fff;
-      font-size: 1.2em;
-      border-radius: 15px;
-      text-align: center;
-      margin: 2px;
-      font-family: 'dynapuff', cursive;
-      transition: background-color 0.8s ease;
-    }
+/* Button styles */
+.button {
+  display: inline-block;
+  padding: 10px 10px;
+  background-color: #815a5a;
+  color: #fff;
+  font-size: 1.2em;
+  border-radius: 15px;
+  text-align: center;
+  margin: 2px;
 
-    .button:hover {
-      background-color: #a89494;
-    }
+  font-family: "short stack", cursive;
+  transition: background-color 0.8s ease;
+}
 
-    /* Dropdown styles */
-    .dropdown {
-      position: relative;
-      display: inline-block;
-    }
+.button:hover {
+  background-color: #a89494;
+}
 
-    .dropdown-content {
-      display: none;
-      position: center;
-      z-index: 1;
-      background-color: #f5d0d0;
-      box-shadow: 0px 0px 10x 0px rgba(0, 0, 0, 0.0);
-      border-radius: 20px;
-      font-size: 1.7em;
-    }
+/* Dropdown styles */
+.dropdown {
+  position: relative;
+  display: inline-block;
+}
 
-    .dropdown-content a {
-      color: #815a5a;
-      text-align: center;
-      font-family: 'dynapuff', cursive
-      padding: 0px 0px;
-      text-decoration: none;
-      display: block;
-    }
+.dropdown-content {
+  display: none;
+  position: center;
+  z-index: 1;
+  background-color: #f5d0d0;
+  box-shadow: 0px 0px 10x 0px rgba(0, 0, 0, 0);
+  border-radius: 20px;
+  font-size: 1.7em;
+}
 
-    .dropdown-content a:hover {
-      background-color: #dfc4c4;
-      border-radius: 20px;
-    }
+.dropdown-content a {
+  color: #815a5a;
+  text-align: center;
+  font-family: "short stack", cursive;
+  padding: 0px 0px;
+  text-decoration: none;
+  display: block;
+}
 
-    .dropdown:hover .dropdown-content {
-      display: block;
-      border-radius: 20px;
-    }
+.dropdown-content a:hover {
+  background-color: #dfc4c4;
+  border-radius: 20px;
+}
+
+.dropdown:hover .dropdown-content {
+  display: block;
+  border-radius: 20px;
+}
 @keyframes shake {
-  10%, 90% {
+  10%,
+  90% {
     transform: translate3d(-1px, 0, 0);
   }
 
-  20%, 80% {
+  20%,
+  80% {
     transform: translate3d(2px, 0, 0);
   }
 
-  30%, 50%, 70% {
+  30%,
+  50%,
+  70% {
     transform: translate3d(-4px, 0, 0);
   }
 
-  40%, 60% {
+  40%,
+  60% {
     transform: translate3d(4px, 0, 0);
   }
 }
 
 .apply-shake {
-    animation: shake 0.82s cubic-bezier(.36,.07,.19,.97) both;
+  animation: shake 0.82s cubic-bezier(0.36, 0.07, 0.19, 0.97) both;
 }
-    /* Media queries */
-    @media screen and (max-width: 768px) {
-      h1 {
-        font-size: 3.5em;
-      }
+/* Media queries */
+@media screen and (max-width: 768px) {
+  h1 {
+    font-size: 3.5em;
+  }
 
-      p {
-        font-size: 2.1em;
-      }
+  p {
+    font-size: 2.1em;
+  }
 
-      .progress-bar {
-        width: 80%;
-      }
-    }
+  .progress-bar {
+    width: 80%;
+  }
+}

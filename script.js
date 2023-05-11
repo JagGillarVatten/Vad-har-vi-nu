@@ -1,31 +1,31 @@
-// JavaScript code
-
 let events = [];
 let eventDuration = 0;
+
 const eventFiles = [
-  {
-    name: "9B",
-    url: "9B.json",
-  },
-  {
-    name: "9A",
-    url: "9A.json",
-  },
-  {
-    name: "9C",
-    url: "9C.json",
-  },
+  { name: "9B", url: "9B.json" },
+  { name: "9C", url: "9C.json" },
+  { name: "9A", url: "9A.json" },
 ];
 
-const loadJSON = (callback, url) =>
-  fetch(url)
-    .then((response) => response.json())
-    .then(callback);
+function loadJSON(callback, url) {
+  const xhr = new XMLHttpRequest();
+  xhr.overrideMimeType("application/json");
+  xhr.open("GET", url, true);
+  xhr.onreadystatechange = function () {
+    if (xhr.readyState == 4 && xhr.status == "200") {
+      callback(xhr.responseText);
+    }
+  };
+  xhr.send(null);
+}
 
-const getTodaysEvents = () =>
-  events.filter((event) => event.startDay === new Date().getDay());
+function getTodaysEvents() {
+  const today = new Date();
+  const dayOfWeek = today.getDay();
+  return events.filter((event) => event.startDay === dayOfWeek);
+}
 
-const getNextEvent = () => {
+function getNextEvent() {
   const now = new Date();
   const today = new Date(now.getFullYear(), now.getMonth(), now.getDate());
   const todaysEvents = getTodaysEvents();
@@ -44,9 +44,9 @@ const getNextEvent = () => {
   }
   // There are no events left today
   return null;
-};
+}
 
-const updateCountdown = () => {
+function updateCountdown() {
   if (events.length === 0) {
     // JSON hasn't loaded yet, try again later
     setTimeout(updateCountdown, 1000);
@@ -58,7 +58,8 @@ const updateCountdown = () => {
 
   if (nextEvent === null) {
     // No events left today
-    document.getElementById("countdown").innerHTML = "Inga lektioner just nu.";
+    document.getElementById("countdown").innerHTML =
+      "Inga fler lektioner idag.";
     document.getElementById("progress-bar").style.display = "none";
     return;
   }
@@ -70,19 +71,12 @@ const updateCountdown = () => {
   if (now < start) {
     // Event hasn't started yet
     const timeUntilStart = (start - now) / 1000; // Convert to seconds
-    const totalTimeUntilStart =
-      (start -
-        new Date(today.getFullYear(), today.getMonth(), today.getDate())) /
-      1000; // Convert to seconds
-    const progressPercentage =
-      ((totalTimeUntilStart - timeUntilStart) / totalTimeUntilStart) * 100;
-    const countdown = `${eventName} börjar om: ${formatSeconds(
+    const countdown = ` ${eventName} börjar om: ${formatSeconds(
       timeUntilStart
-    )}`;
+    )} `;
     document.getElementById("countdown").innerHTML = countdown;
     document.getElementById("countdown").style.color = "#fdd5d5";
-
-    document.getElementById("progress").style.width = `${progressPercentage}%`;
+    document.getElementById("progress").style.width = "0";
     document.getElementById("progress").style.backgroundColor = "#a3d47a";
     document.getElementById("progress-bar").style.display = "block";
     return;
@@ -94,29 +88,17 @@ const updateCountdown = () => {
   const timeRemaining = (end - now) / 1000; // Convert to seconds
   const eventDuration = (end - start) / 1000; // convert to seconds
 
-  if (timeRemaining < 60) {
+  if (timeRemaining < 300 && timeRemaining >= 60) {
+    // Change color to yellow when there's less than 5 minutes left
+    document.getElementById("countdown").style.color = "#f7d26f";
+    document.getElementById("progress").style.backgroundColor = "#f7d26f";
+  } else if (timeRemaining < 60) {
     // Change color to red when there's less than 1 minute left
     document.getElementById("countdown").style.color = "#f36868";
-    document.getElementById("progress").style.animation = "shake infinite 10s";
-    document.getElementById("progress").style.animation = "none";
     document.getElementById("progress").style.backgroundColor = "#f26868";
-  } else if (timeRemaining < 300) {
-    // Change color to yellow when there's less than 5 minutes left
-    document.getElementById("countdown").style.color = "#fdd5d5";
-    document.getElementById("progress").style.animation = "none";
-    document.getElementById("progress").style.backgroundColor = "#f7d26f";
-  } else if (timeRemaining < 600) {
-    // Change color to orange when there's more than 5 minutes but less than 10 minutes left
-    document.getElementById("countdown").style.color = "#fdd5d5";
-    document.getElementById("progress").style.backgroundColor = "#119e9e";
-    document.getElementById("progress").style.animation = "none";
-  } else {
-    // Change color to green when there's more than 10 minutes left
-    document.getElementById("countdown").style.color = "#fdd5d5";
-    document.getElementById("progress").style.backgroundColor = "#a3e376";
   }
 
-  const countdown = `Tid kvar för ${eventName}: ${formatSeconds(
+  const countdown = `Tid kvar för ${eventName}:<br> ${formatSeconds(
     timeRemaining
   )}`;
   document.getElementById("countdown").innerHTML = countdown;
@@ -128,9 +110,9 @@ const updateCountdown = () => {
   document.getElementById("progress").style.width = `${width}px`;
 
   document.getElementById("progress-bar").style.display = "block";
-};
+}
 
-const formatSeconds = (seconds) => {
+function formatSeconds(seconds) {
   const minutes = Math.floor(seconds / 60);
   const hours = Math.floor(minutes / 60);
   const paddedSeconds = pad(Math.floor(seconds) % 60, 2);
@@ -138,19 +120,20 @@ const formatSeconds = (seconds) => {
     return `${hours}:${pad(minutes % 60, 2)}:${paddedSeconds}`;
   }
   return `${pad(minutes, 2)}:${paddedSeconds}`;
-};
+}
 
-const pad = (num, size) => {
+function pad(num, size) {
   return ("000000000" + num).substr(-size);
-};
+}
 
-const loadEventFile = (url) =>
-  loadJSON((response) => {
-    events = response;
+function loadEventFile(url) {
+  loadJSON(function (response) {
+    events = JSON.parse(response);
     updateCountdown();
   }, url);
+}
 
-const init = () => {
+function init() {
   const dropdownContent = document.querySelector(".dropdown-content");
   const dropdownButton = document.querySelector(".dropdown-button");
   eventFiles.forEach((eventFile) => {
@@ -162,6 +145,6 @@ const init = () => {
     dropdownContent.appendChild(eventButton);
   });
   loadEventFile(eventFiles[0].url);
-};
+}
 
 setInterval(updateCountdown, 100);
