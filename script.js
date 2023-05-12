@@ -71,7 +71,7 @@ function updateCountdown() {
   if (now < start) {
     // Event hasn't started yet
     const timeUntilStart = (start - now) / 1000; // Convert to seconds
-    const countdown = ` ${eventName} börjar om: ${formatSeconds(
+    const countdown = ` ${eventName} börjar om: <br> ${formatSeconds(
       timeUntilStart
     )} `;
     document.getElementById("countdown").innerHTML = countdown;
@@ -90,12 +90,22 @@ function updateCountdown() {
 
   if (timeRemaining < 300 && timeRemaining >= 60) {
     // Change color to yellow when there's less than 5 minutes left
-    document.getElementById("countdown").style.color = "#f7d26f";
+    document.getElementById("countdown").style.color = "#fdd5d5";
     document.getElementById("progress").style.backgroundColor = "#f7d26f";
   } else if (timeRemaining < 60) {
     // Change color to red when there's less than 1 minute left
     document.getElementById("countdown").style.color = "#f36868";
+    document.getElementById("countdown").animation = "shake 0.1s";
+    document.getElementById("countdown").animation.iteration = "100";
     document.getElementById("progress").style.backgroundColor = "#f26868";
+  } else if (timeRemaining < 600 && timeRemaining >= 300) {
+    // Change color to red when there's less than 1 minute left
+    document.getElementById("countdown").style.color = "#fdd5d5";
+    document.getElementById("progress").style.backgroundColor = "#d3ff42";
+  } else if (timeRemaining > 600) {
+    // Change color to green when there's more than minute left
+    document.getElementById("countdown").style.color = "#fdd5d5";
+    document.getElementById("progress").style.backgroundColor = "#a3d47a";
   }
 
   const countdown = `Tid kvar för ${eventName}:<br> ${formatSeconds(

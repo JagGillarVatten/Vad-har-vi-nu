@@ -18,7 +18,7 @@ body {
 h1 {
   font-size: 2.5em;
   font-weight: bold;
-  margin-top: 5%;
+  margin-top: 1%;
   color: #ffe4e4;
   font-family: "Bungee", cursive;
   text-align: center;
@@ -62,7 +62,7 @@ p {
 /* Button styles */
 .button {
   display: inline-block;
-  padding: 10px 10px;
+  padding: 0px 10px;
   background-color: #815a5a;
   color: #fff;
   font-size: 1.2em;
