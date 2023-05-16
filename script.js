@@ -71,6 +71,8 @@ function updateCountdown() {
   if (now < start) {
     // Event hasn't started yet
     const timeUntilStart = (start - now) / 1000; // Convert to seconds
+    const timeUntilStartFormatted = formatSeconds(timeUntilStart);
+    document.title = `${timeUntilStartFormatted} tills | ${eventName}`;
     const countdown = ` ${eventName} börjar om: <br> ${formatSeconds(
       timeUntilStart
     )} `;
@@ -91,12 +93,16 @@ function updateCountdown() {
   if (timeRemaining < 300 && timeRemaining >= 60) {
     // Change color to yellow when there's less than 5 minutes left
     document.getElementById("countdown").style.color = "#fdd5d5";
+    document.getElementById("countdown").style.animation = "Shake 0.1s";
+    document.getElementById("countdown").style.animationIterationCount = "100";
     document.getElementById("progress").style.backgroundColor = "#f7d26f";
   } else if (timeRemaining < 60) {
     // Change color to red when there's less than 1 minute left
     document.getElementById("countdown").style.color = "#f36868";
-    document.getElementById("countdown").animation = "shake 0.1s";
-    document.getElementById("countdown").animation.iteration = "100";
+    document.getElementById("body").style.backgroundColor = "#f36868";
+
+    document.getElementById("countdown").style.animation = "shake 0.1s";
+    document.getElementById("countdown").style.animation.iteration = "100";
     document.getElementById("progress").style.backgroundColor = "#f26868";
   } else if (timeRemaining < 600 && timeRemaining >= 300) {
     // Change color to red when there's less than 1 minute left
@@ -112,7 +118,8 @@ function updateCountdown() {
     timeRemaining
   )}`;
   document.getElementById("countdown").innerHTML = countdown;
-
+  const timeRemainingFormatted = formatSeconds(timeRemaining);
+  document.title = `${timeRemainingFormatted} kvar | ${eventName}`;
   const percentElapsed = (timeElapsed / eventDuration) * 100;
   const width =
     (percentElapsed / 100) *
