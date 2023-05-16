@@ -62,7 +62,7 @@ To customize Vad har vi nu? for your own needs, follow these steps:
     "startDay": 1,
     "startTime": "13:15",
     "endTime": "14:15"
-  },
+  }
 ```
 
 1 means monday and 5 is friday and so on.
