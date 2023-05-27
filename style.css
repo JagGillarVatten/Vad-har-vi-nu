@@ -12,7 +12,6 @@ body {
   flex-direction: column;
   transition: background-color, 0.4s;
   align-items: center;
-  overflow: hidden;
 }
 
 h1 {
@@ -61,35 +60,34 @@ p {
 
 /* Button styles */
 .button {
-  visibility: hidden;
   display: inline-block;
   padding: 0px 10px;
   background-color: #815a5a;
   color: #fff;
-
   font-size: 1.2em;
   border-radius: 15px;
   text-align: center;
+  align-self: center;
   margin: 2px;
-
   font-family: "short stack", cursive;
   transition: background-color 0.8s ease;
 }
 
 .button:hover {
   background-color: #a89494;
-  visibility: visible;
 }
 
 /* Dropdown styles */
 .dropdown {
   position: relative;
+  margin-right: 70%;
   display: inline-block;
 }
 
 .dropdown-content {
   display: none;
-  position: center;
+  position: absolute;
+
   z-index: 1;
   background-color: #f5d0d0;
   box-shadow: 0px 0px 10x 0px rgba(0, 0, 0, 0);
@@ -142,6 +140,29 @@ p {
   animation: shake 0.82s cubic-bezier(0.36, 0.07, 0.19, 0.97) both;
 }
 /* Media queries */
+ul {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+li {
+  margin-bottom: 1px;
+}
+
+strong {
+  font-weight: bold;
+}
+
+div#rss-container {
+  background-color: rgba(255, 255, 255, 0.308);
+  border: 1px solid rgba(221, 221, 221, 0.26);
+  border-radius: 5px;
+  box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.1);
+  padding: 1px;
+  align-self: ;
+}
+
 @media screen and (max-width: 768px) {
   h1 {
     font-size: 3.5em;

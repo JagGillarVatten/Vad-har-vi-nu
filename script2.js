@@ -1,110 +1,117 @@
-$(document).ready(function () {
-  var events = [];
-  var currentEventIndex;
-  var timerHandle;
+const selectElem = document.getElementById("json-select");
+const dayHeaderElem = document.getElementById("day-header");
+const mapElem = document.getElementById("map");
+const progressElem = document.getElementById("progress");
+const classNameElem = document.getElementById("class-name");
+const timeLeftElem = document.getElementById("time-left");
 
-  // Läs schemafilen som användaren valde
-  function loadSchedule(filename) {
-    $.getJSON(filename, function (data) {
-      events = data.events;
-      currentEventIndex = 0;
-      scheduleNextEvent();
-    });
-  }
+let data; // Store JSON data
+let currentDate; // Store current date
 
-  // Loopa igenom händelserna och planera nästa händelse
-  function scheduleNextEvent() {
-    var today = new Date().getDay();
-    var currentTime = new Date();
-    for (var i = 0; i < events.length; i++) {
-      if (
-        events[i].startday == today &&
-        currentTime >= getTimeFromString(events[i].StartTime) &&
-        currentTime <= getTimeFromString(events[i].EndTime)
-      ) {
-        currentEventIndex = i;
-        renderEvent();
-        startCountdown(getTimeFromString(events[i].EndTime));
-        return;
-      }
-    }
+// Fetch JSON data
+function fetchData(url) {
+  return axios.get(url).then((response) => response.data);
+}
 
-    // Om det inte finns någon händelse, visa nästa händelse för morgondagen
-    currentEventIndex = 0;
-    for (var i = 0; i < events.length; i++) {
-      if (
-        events[i].startday == today + 1 ||
-        (today == 7 && events[i].startday == 1)
-      ) {
-        currentEventIndex = i;
-        renderEvent();
-        startCountdown(getTimeFromString(events[i].StartTime));
-        return;
-      }
-    }
-  }
-
-  // Funktion för att starta nedräkningen
-  function startCountdown(endTime) {
-    clearInterval(timerHandle);
-    timerHandle = setInterval(function () {
-      updateCountdownTimer(endTime);
-    }, 1000);
-  }
-
-  // Funktion för att uppdatera nedräkningstimer och progressbar
-  function updateCountdownTimer(endTime) {
-    var now = new Date().getTime();
-    var diff = endTime - now;
-
-    if (diff <= 0 || currentEventIndex >= events.length) {
-      clearInterval(timerHandle);
-      scheduleNextEvent();
-      return;
-    }
-
-    var minutes = Math.floor(diff / (1000 * 60));
-    var seconds = Math.floor((diff % (1000 * 60)) / 1000);
-    $("#countdown-timer").text(
-      minutes + " minuter, " + seconds + " sekunder kvar"
-    );
-
-    var totalDuration = getTimeDurationFromString(
-      events[currentEventIndex].StartTime,
-      events[currentEventIndex].EndTime
-    );
-    var progress = ((totalDuration - diff) / totalDuration) * 100;
-    $(".progressbar").css("width", progress + "%");
-  }
-
-  // Funktion för att rendera nästa händelse
-  function renderEvent() {
-    $("#event-name").text(events[currentEventIndex].name);
-    $("#countdown-timer").text("");
-    $(".progressbar").css("width", "0%");
-  }
-
-  // Funktion för att konvertera en sträng som representerar tid till datumsobjekt
-  function getTimeFromString(timeStr) {
-    var timeParts = timeStr.split(":");
-    return new Date().setHours(timeParts[0], timeParts[1], 0, 0);
-  }
-
-  // Funktion för att räkna ut längden av en händelse i millisekunder
-  function getTimeDurationFromString(start, end) {
-    var startTime = getTimeFromString(start);
-    var endTime = getTimeFromString(end);
-    if (endTime <= startTime) {
-      endTime += 24 * 60 * 60 * 1000; // lägg till en dag om slutet är efter midnatt
-    }
-    return endTime - startTime;
-  }
-
-  // Uppdatera schema när användaren väljer ett annat schema från rullgardinsmenyn
-  $("#schedule-selector").change(function () {
-    loadSchedule($(this).val());
-  });
-
-  // Ladda schemat från den första filen vid start
-  loadSchedule("9A.json");
+// Populate dropdown menu with available JSON files
+fetchData("json-files.json").then((jsonData) => {
+  const optionsHTML = jsonData
+    .map(
+      (option, index) =>
+        `<option value="${option.file}"${index === 0 ? " selected" : ""}>${
+          option.name
+        }</option>`
+    )
+    .join("");
+  selectElem.innerHTML = optionsHTML;
+  loadJSON(jsonData[0].file);
 });
+
+// When a new JSON file is selected from the dropdown menu
+selectElem.addEventListener("change", (event) => {
+  loadJSON(event.target.value);
+});
+
+// Load JSON file and update the webpage accordingly
+function loadJSON(filename) {
+  fetchData(filename).then((jsonData) => {
+    data = jsonData;
+
+    // Update the current date
+    currentDate = moment();
+
+    // Update the day header
+    const days = [
+      "Sunday",
+      "Monday",
+      "Tuesday",
+      "Wednesday",
+      "Thursday",
+      "Friday",
+      "Saturday",
+    ];
+    const currentDayIndex = parseInt(currentDate.format("d"));
+    dayHeaderElem.textContent = `${days[currentDayIndex]} (${currentDate.format(
+      "MMMM Do"
+    )})`;
+
+    // Filter events based on the current day of the week
+    const filteredData = _.filter(data, { day: `${currentDayIndex}` });
+
+    // Sort events by their start time
+    filteredData.sort((a, b) => (a.start_time > b.start_time ? 1 : -1));
+
+    // Generate the map
+    let mapHTML = "";
+    const mapWidth = 1000;
+    const mapHeight = 500;
+    let totalDuration = 0;
+    let currentEvent = null;
+
+    filteredData.forEach((event, index) => {
+      const startTime = moment(event.start_time, "HH:mm");
+      const endTime = moment(event.end_time, "HH:mm");
+      const duration = moment.duration(endTime.diff(startTime)).asMinutes();
+      const xPos =
+        (mapWidth *
+          startTime.diff(moment(startTime).startOf("day"), "minutes")) /
+        1440;
+      const yPos = (mapHeight / filteredData.length) * index;
+      const width = (mapWidth * duration) / 1440;
+      const height = mapHeight / filteredData.length;
+
+      mapHTML += `<rect x="${xPos}" y="${yPos}" width="${width}" height="${height}" fill="#AAAAAA"/>`;
+
+      if (currentDate.isBetween(startTime, endTime, null, "[]")) {
+        const progressWidth =
+          (mapWidth * currentDate.diff(startTime, "minutes")) / duration;
+        progressElem.style.width = `${progressWidth}px`;
+        progressElem.style.left = `${xPos + progressWidth}px`;
+        currentEvent = event;
+      }
+
+      totalDuration += duration;
+    });
+
+    mapElem.innerHTML = `` + mapHTML + ``;
+
+    // Display information about the current event
+    if (currentEvent) {
+      classNameElem.textContent = currentEvent.class;
+      const endTime = moment(currentEvent.end_time, "HH:mm");
+      const timeLeft = moment.duration(endTime.diff(currentDate)).asMinutes();
+      if (timeLeft > 1) {
+        timeLeftElem.textContent = `${Math.floor(
+          timeLeft
+        )} minutes left in class`;
+      } else if (timeLeft > 0) {
+        timeLeftElem.textContent = `Less than a minute left in class`;
+      } else {
+        timeLeftElem.textContent = `Class is over`;
+      }
+    } else {
+      classNameElem.textContent = "No classes currently in session";
+      timeLeftElem.textContent = "";
+    }
+  });
+}

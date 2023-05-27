@@ -1,38 +1,33 @@
 body {
   font-family: Arial, sans-serif;
-  background-color: #ffdedb;
+  margin: 0;
+  padding: 0;
+}
+
+header {
+  background-color: #f2f2f2;
+  padding: 20px;
+  text-align: center;
 }
 
 h1 {
-  text-align: center;
-  margin-top: 50px;
-  margin-bottom: 0px;
-  font-size: 36px;
+  margin: 0;
 }
 
-#countdown-timer {
-  text-align: center;
-  font-size: 28px;
-  margin-top: 20px;
-  margin-bottom: 20px;
+main {
+  background-color: #fff;
+  padding: 20px;
 }
 
-.progressbar-container {
-  width: 80%;
-  height: 20px;
+.container {
+  max-width: 800px;
   margin: 0 auto;
-  background-color: #eee;
 }
 
-.progressbar {
-  height: 100%;
-  background-color: #f44336;
+h2 {
+  margin-top: 0;
 }
 
-.select {
-  margin: 20px;
-}
-
-option {
-  font-size: 24px;
+#schedule-container {
+  margin-top: 20px;
 }
