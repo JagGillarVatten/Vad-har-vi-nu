@@ -1,10 +1,20 @@
 let events = [];
+
 let eventDuration = 0;
 
 const eventFiles = [
-  { name: "9B", url: "9B.json" },
-  { name: "9C", url: "9C.json" },
-  { name: "9A", url: "9A.json" },
+  {
+    name: "9B",
+    url: "9B.json",
+  },
+  {
+    name: "9C",
+    url: "9C.json",
+  },
+  {
+    name: "9A",
+    url: "9A.json",
+  },
 ];
 
 function loadJSON(callback, url) {
@@ -36,10 +46,18 @@ function getNextEvent() {
     const end = new Date(`${today.toDateString()} ${todaysEvents[i].endTime}`);
     if (now >= start && now < end) {
       // We're currently in this event
-      return { name: todaysEvents[i].name, start: start, end: end };
+      return {
+        name: todaysEvents[i].name,
+        start: start,
+        end: end,
+      };
     } else if (now < start) {
       // This event hasn't started yet
-      return { name: todaysEvents[i].name, start: start, end: end };
+      return {
+        name: todaysEvents[i].name,
+        start: start,
+        end: end,
+      };
     }
   }
   // There are no events left today
@@ -165,3 +183,31 @@ function init() {
 }
 
 setInterval(updateCountdown, 100);
+
+function parseRSS(rss) {
+  const parser = new DOMParser();
+  const xmlDoc = parser.parseFromString(rss, "text/xml");
+
+  const items = xmlDoc.getElementsByTagName("item");
+  let html = "<ul>";
+
+  for (let i = 0; i < items.length; i++) {
+    const title = items[i].getElementsByTagName("title")[0].textContent;
+    const description =
+      items[i].getElementsByTagName("description")[0].textContent;
+
+    html += `<li><strong>${title}</strong>: ${description}</li>`;
+  }
+
+  html += "</ul>";
+
+  const rssContainer = document.createElement("div");
+  rssContainer.innerHTML = html;
+
+  const body = document.getElementsByTagName("body")[0];
+  body.insertBefore(rssContainer, body.firstChild);
+}
+
+loadJSON(function (response) {
+  parseRSS(response);
+}, "https://skolmaten.se/hammarbyskolan/rss/days/");
