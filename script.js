@@ -118,7 +118,7 @@ function updateCountdown() {
     // Change color to red when there's less than 1 minute left
     document.getElementById("countdown").style.color = "#f36868";
     document.getElementById("body").style.backgroundColor = "#f36868";
-
+  }
     document.getElementById("countdown").style.animation = "shake 0.1s";
     document.getElementById("countdown").style.animation.iteration = "100";
     document.getElementById("progress").style.backgroundColor = "#f26868";
