@@ -7,11 +7,13 @@
     "start": "serve"
   },
   "repository": "https://github.com/JagGillarVatten/Vad-har-vi-nu",
-  "keywords": [],
+  "keywords": [
+    "Swedish", "School", "Skola", "Vad har vi nu?", "Hammarbyskolan södra", "Skolmaten.se", "Skola schema",
+  ],
   "author": "Jeppe",
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/codesandbox-app/static-template/issues"
+    "url": "https://github.com/JagGillarVatten/Vad-har-vi-nu/issues"
   },
   "homepage": "https://github.com/JagGillarVatten/Vad-har-vi-nu",
   "devDependencies": {
