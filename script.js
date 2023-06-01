@@ -113,12 +113,12 @@ function updateCountdown() {
     document.getElementById("countdown").style.color = "#fdd5d5";
     document.getElementById("countdown").style.animation = "Shake 0.1s";
     document.getElementById("countdown").style.animationIterationCount = "100";
-    document.getElementById("progress").style.backgroundColor = "#f7d26f"; {
-  } else if (timeRemaining < 60) 
+    document.getElementById("progress").style.backgroundColor = "#f7d26f";
+  } else if (timeRemaining < 60) {
     // Change color to red when there's less than 1 minute left
     document.getElementById("countdown").style.color = "#f36868";
     document.getElementById("body").style.backgroundColor = "#f36868";
-  }
+
     document.getElementById("countdown").style.animation = "shake 0.1s";
     document.getElementById("countdown").style.animation.iteration = "100";
     document.getElementById("progress").style.backgroundColor = "#f26868";
