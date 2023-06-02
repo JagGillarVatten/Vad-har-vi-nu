@@ -76,16 +76,16 @@ let eventDuration = 0;
 
 const eventFiles = [
   {
-    name: "9B",
-    url: "9B.json",
+    name: "The name for your schedule",
+    url: "Filename for your JSON.json", // DON'T FORGET THE , AFTER } if there are more options after it.
   },
   {
-    name: "9C",
-    url: "9C.json",
+    name: "Another one",
+    url: "Another one.json",
   },
   {
-    name: "9A",
-    url: "9A.json",
+    name: "Yet another one",
+    url: "Yet another one.json",
   },
 ];
 ```
