@@ -68,8 +68,29 @@ To customize Vad har vi nu? for your own needs, follow these steps:
 1 means monday and 5 is friday and so on.
 
 3. Replace the existing JSON files in the root folder with your custom JSON files.
-4. Open the `index.html` file in your web browser and select the class you want to view the schedule for from the dropdown menu.
-5. The schedule for the selected class will be displayed.
+4. Go to the script.js and add the JSON to the array. This array keeps track of what options are selectable:
+```js
+let events = [];
+
+let eventDuration = 0;
+
+const eventFiles = [
+  {
+    name: "9B",
+    url: "9B.json",
+  },
+  {
+    name: "9C",
+    url: "9C.json",
+  },
+  {
+    name: "9A",
+    url: "9A.json",
+  },
+];
+```
+5. Open the `index.html` file in your web browser and select the class you want to view the schedule for from the dropdown menu.
+6. The schedule for the selected class will be displayed.
 
 ## Credits
 
