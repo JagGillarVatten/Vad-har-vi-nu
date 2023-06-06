@@ -214,19 +214,3 @@ Vad har vi nu? was created by JagGillarVatten
 Vad har vi nu? is licensed under the [MIT License](https://opensource.org/licenses/MIT). 
 
 
-## Language Switcher
-
-<button onclick="hideEnglish()">Svenska</button>
-<button onclick="showEnglish()">English</button>
-
-<script>
-function hideEnglish() {
-  document.getElementById("english").style.display = "none";
-  document.getElementById("swedish").style.display = "block";
-}
-
-function showEnglish() {
-  document.getElementById("english").style.display = "block";
-  document.getElementById("swedish").style.display = "none";
-}
-</script>
