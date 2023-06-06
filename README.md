@@ -1,4 +1,113 @@
-# Vad-har-vi-nu
+# Vad har vi nu?
+
+Vad har vi nu? är en applikation som är designad för att hjälpa studenter att hålla koll på sin skolschema. Det tillåter användare att visa schemat för olika klasser och läser schemana från JSON-filer.
+
+## Funktioner
+
+- Visa schemat för olika klasser.
+- Läs scheman från JSON-filer.
+- Responsiv design för olika skärmstorlekar.
+
+## Användning
+
+För att använda Vad har vi nu?, följ dessa steg:
+
+1. Klona eller ladda ner filerna till din dator
+2. Öppna `index.html`-filen i din webbläsare.
+3. Välj den klass du vill se schemat för från rullgardinsmenyn.
+4. Schemat för den valda klassen visas.
+
+## Anpassning
+
+För att anpassa Vad har vi nu? efter dina egna behov, följ dessa steg:
+
+1. Skapa en JSON-fil för varje klasschema du vill visa. Filen ska namnges `KLASSNAMN.json`, där KLASSNAMN är namnet på klassen.
+2. JSON-filen ska ha följande format:
+
+   ```json
+   [
+     {
+       "name": "Engelska",
+       "startDay": 1,
+       "startTime": "09:20",
+       "endTime": "10:20"
+     },
+     {
+       "name": "Biologi",
+       "startDay": 1,
+       "startTime": "10:30",
+       "endTime": "11:10"
+     },
+     {
+       "name": "Historia",
+       "startDay": 1,
+       "startTime": "11:15",
+       "endTime": "12:10"
+     },
+     {
+       "name": "Spanska",
+       "startDay": 1,
+       "startTime": "12:15",
+       "endTime": "13:00"
+     },
+     {
+       "name": "Lunch",
+       "startDay": 1,
+       "startTime": "12:10",
+       "endTime": "12:40"
+     },
+     {
+       "name": "Matematik",
+       "startDay": 1,
+       "startTime": "13:15",
+       "endTime": "14:15"
+     }
+   ```
+
+  startday är en variabel där 1 står för måndag och 5 är fredag.
+
+3. Byt ut de befintliga JSON-filerna i rotmappen med dina anpassade JSON-filer.
+4. Gå till script.js och lägg till JSON-data till arrayen. Denna array håller reda på vilka alternativ som finns att välja mellan:
+
+```js
+let events = [];
+
+let eventDuration = 0;
+
+const eventFiles = [
+  {
+    name: "Namnet på ditt schema",
+    url: "Filnamn för din JSON.json", // GLÖM INTE ATT SKRIVA , EFTER } OM DET FINNS YTTERLIGARE ALTERNATIV EFTER
+  },
+  {
+    name: "Ett annat schema",
+    url: "Ett annat schema.json",
+  },
+  {
+    name: "Ett tredje schema",
+    url: "Ett tredje schema.json",
+  },
+];
+```
+
+5. Öppna `index.html`-filen i din webbläsare och välj den klass du vill visa schemat för från rullgardinsmenyn.
+6. Schemat för den valda klassen visas.
+
+## Nedladdning
+
+Ladda ner Vad har vi nu? för Android från [här](https://github.com/JagGillarVatten/Vad-har-vi-nu/releases/download/v.1.5/Vad.har.vi.nu_1_1.0.apk).
+
+## Credits
+
+Vad har vi nu? skapades av JagGillarVatten.
+
+## Licens
+
+Vad har vi nu? licensieras under [MIT License](https://opensource.org/licenses/MIT).
+
+
+### English Translation
+
 # Vad har vi nu?
 
 Vad har vi nu? is an application designed to help students keep track of their school schedule. It allows users to view their schedule for different classes, and it reads the schedules from JSON files.
@@ -92,10 +201,32 @@ const eventFiles = [
 5. Open the `index.html` file in your web browser and select the class you want to view the schedule for from the dropdown menu.
 6. The schedule for the selected class will be displayed.
 
+## Download
+
+Download Vad har vi nu? for Android from [here](https://github.com/JagGillarVatten/Vad-har-vi-nu/releases/download/v.1.5/Vad.har.vi.nu_1_1.0.apk).
+
 ## Credits
 
-Vad har vi nu? was created by [JagGillarVatten].
+Vad har vi nu? was created by JagGillarVatten
 
 ## License
 
-Vad har vi nu? is licensed under the [MIT License](https://opensource.org/licenses/MIT).
+Vad har vi nu? is licensed under the [MIT License](https://opensource.org/licenses/MIT). 
+
+
+## Language Switcher
+
+<button onclick="hideEnglish()">Svenska</button>
+<button onclick="showEnglish()">English</button>
+
+<script>
+function hideEnglish() {
+  document.getElementById("english").style.display = "none";
+  document.getElementById("swedish").style.display = "block";
+}
+
+function showEnglish() {
+  document.getElementById("english").style.display = "block";
+  document.getElementById("swedish").style.display = "none";
+}
+</script>
